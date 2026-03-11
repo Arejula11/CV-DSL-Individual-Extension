@@ -1,6 +1,6 @@
 # External DSL Code Generator
-
-## First
+In this document, we explain the process of creating an external DSL Code Generator.
+## First Example
 ### DSL
 ```
 Metadata 
@@ -59,7 +59,7 @@ Customization
 include Profile where language "es"
 include Education where endDate before "2021"
 ```
-### Code Generater Output
+### Code Generator Output
 ```python
 
 from Models import Profile, Customization
@@ -296,4 +296,9 @@ customizer = Customization(cv)
 customizer.add_filter("Education", "LANGUAGE", "en")
 
 cv.build()
-````
+```
+
+
+## Output description
+In all three examples, the DSL code is transformed into Python code that constructs a `Profile` object with the specified metadata, user data, experience, projects, education, skills, and languages. The `Customization` class is used to apply filters to the profile before building the final output. The generated code is structured and organized, making it easy to understand and maintain. Each section of the profile is created using methods that correspond to the DSL syntax, ensuring a clear mapping between the DSL and the generated code.
+
