@@ -25,81 +25,62 @@ import org.xtext.example.resume.resume.GeneralFilter
 class ResumeGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(Greeting)
-//				.map[name]
-//				.join(', '))
 
-		//resource.allContents.filter(Entity).forEach[fsa.generateFile(it.name+".py",it.compile)]
-		
-		// Obtenemos el elemento raíz de nuestro DSL, que es Profile
         val profile = resource.contents.head as Profile
-		println(">>> ¡INTENTANDO GENERAR EL CV! <<<"        )
 		
         if (profile !== null) {
-            // Generamos un archivo Python llamado "generated_cv.py"
             fsa.generateFile('generated_cv.py', profile.compile)
         }
-        
-        
 	
 	}
+	 
 	
-	
-	// Método principal para compilar el Profile
-	
-def compile(Profile p) '''
-        # --- Importaciones de tus clases de Python ---
-        from Models import Profile, Metadata, UserData, Experience, Projects, Education, Skills, Interests, Languages, Customization
-        
-        # --- Inicialización ---
-        cv = Profile("«p.userdata.name»")
-        
-        # --- Metadata y Userdata ---
-        cv.with_metadata("«p.metadata.style»", "«p.metadata.font»", "«p.metadata.imgPath»")
-        cv.with_userdata(
-            "«p.userdata.name»", 
-            "«p.userdata.email»", 
-            "«p.userdata.telephoneNumber»", 
-            "«p.userdata.direction»", 
-            "«p.userdata.country»", 
-            "«p.userdata.city»"
-        )
-        
-    # --- Secciones ---
-            «FOR section : p.sections»
-                «section.compileSection»
-            «ENDFOR»
-            
-            # --- Personalización (Filtros) ---
-            «IF p.customization !== null»
-            customizer = Customization(cv)
-            «FOR rule : p.customization.rules»
-                «IF rule.filter instanceof GeneralFilter»
-            customizer.add_filter("«rule.sectionType.literal»", "TAGS", "«(rule.filter as GeneralFilter).tag»")
-                «ENDIF»
-            «ENDFOR»
-            # Aplicamos el filtro de lenguaje base para todas las secciones incluidas
-            «FOR rule : p.customization.rules»
-            customizer.add_filter("«rule.sectionType.literal»", "LANGUAGE", "«p.customization.language»")
-            «ENDFOR»
-            «ENDIF»
-            
-            # --- Construcción final ---
-            cv.build()
-        '''
-    
-        // --- Dispatches para cada tipo de sección ---
-        // Xtend usa 'dispatch' para saber qué método llamar dependiendo del subtipo exacto en tiempo de ejecución.
-    
-        def dispatch compileSection(Experience e) '''
-            exp = cv.add_experience("«e.language»")
-            «FOR job : e.jobs»
-            exp.add_job("«job.title»", "«job.company»", "«job.startDate»", "«job.endDate»", «job.description.compileList», «job.tags.compileList»)
-            «ENDFOR»
-        '''
-    
+	def compile(Profile p) '''
+
+       from Models import Profile, Customization
+       
+       
+       cv = Profile("«p.userdata.name»")
+       
+       cv.with_metadata("«p.metadata.style»", "«p.metadata.font»", "«p.metadata.imgPath»")
+       cv.with_userdata(
+           "«p.userdata.name»", 
+           "«p.userdata.email»", 
+           "«p.userdata.telephoneNumber»", 
+           "«p.userdata.direction»", 
+           "«p.userdata.country»", 
+           "«p.userdata.city»"
+       )
+       
+       
+       «FOR section : p.sections»
+       «section.compileSection»
+       «ENDFOR»
+       
+       
+       «IF p.customization !== null»
+       customizer = Customization(cv)
+       «FOR rule : p.customization.rules»
+           «IF rule.filter instanceof GeneralFilter»
+       customizer.add_filter("«rule.sectionType.literal»", "TAGS", "«(rule.filter as GeneralFilter).tag»")
+           «ENDIF»
+       «ENDFOR»
+       
+       «FOR rule : p.customization.rules»
+       customizer.add_filter("«rule.sectionType.literal»", "LANGUAGE", "«p.customization.language»")
+       «ENDFOR»
+       «ENDIF»
+       
+       cv.build()
+       '''
+       
+       def dispatch compileSection(Experience e) '''
+	       exp = cv.add_experience("«e.language»")
+	       «FOR job : e.jobs»
+	       exp.add_job("«job.title»", "«job.company»", «job.startDate», «job.endDate», «job.description.compileList», «job.tags.compileList»)
+	       «ENDFOR»
+       '''
+       
         def dispatch compileSection(Projects proj) '''
             projects = cv.add_projects("«proj.language»")
             «FOR p : proj.projects»
@@ -110,7 +91,7 @@ def compile(Profile p) '''
         def dispatch compileSection(Education ed) '''
             education = cv.add_education("«ed.language»")
             «FOR d : ed.degrees»
-            education.add_degree("«d.title»", "«d.institution»", "«d.graduationDate»", "«d.country»", «d.tags.compileList»)
+            education.add_degree("«d.title»", "«d.institution»", «d.graduationDate», "«d.country»", «d.tags.compileList»)
             «ENDFOR»
         '''
     
@@ -129,7 +110,6 @@ def compile(Profile p) '''
             cv.add_languages("«lang.language»").add_languages(«lang.tags.compileList»)
         '''
     
-        // --- Helper para convertir StringList de Xtext a Listas de Python ---
         def compileList(StringList sl) '''[«IF sl !== null»«FOR v : sl.values SEPARATOR ', '»"«v»"«ENDFOR»«ENDIF»]'''
 	
 
