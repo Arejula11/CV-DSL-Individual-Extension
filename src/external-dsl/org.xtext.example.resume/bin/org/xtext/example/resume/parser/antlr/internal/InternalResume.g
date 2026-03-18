@@ -893,6 +893,44 @@ ruleProject returns [EObject current=null]
 				}
 			)
 		)
+		(
+			otherlv_10='from:'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getProjectAccess().getFromKeyword_10_0());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getProjectRule());
+						}
+					}
+					otherlv_11=RULE_ID
+					{
+						newLeafNode(otherlv_11, grammarAccess.getProjectAccess().getFromSkillCrossReference_10_1_0());
+					}
+				)
+			)
+			(
+				otherlv_12=','
+				{
+					newLeafNode(otherlv_12, grammarAccess.getProjectAccess().getCommaKeyword_10_2_0());
+				}
+				(
+					(
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getProjectRule());
+							}
+						}
+						otherlv_13=RULE_ID
+						{
+							newLeafNode(otherlv_13, grammarAccess.getProjectAccess().getFromSkillCrossReference_10_2_1_0());
+						}
+					)
+				)
+			)*
+		)?
 	)
 ;
 
@@ -1171,15 +1209,33 @@ ruleSkill returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='title:'
+		(
+			(
+				lv_name_0_0=RULE_ID
+				{
+					newLeafNode(lv_name_0_0, grammarAccess.getSkillAccess().getNameIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getSkillRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_1='title:'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getSkillAccess().getTitleKeyword_0());
+			newLeafNode(otherlv_1, grammarAccess.getSkillAccess().getTitleKeyword_1());
 		}
 		(
 			(
-				lv_title_1_0=RULE_STRING
+				lv_title_2_0=RULE_STRING
 				{
-					newLeafNode(lv_title_1_0, grammarAccess.getSkillAccess().getTitleSTRINGTerminalRuleCall_1_0());
+					newLeafNode(lv_title_2_0, grammarAccess.getSkillAccess().getTitleSTRINGTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -1188,21 +1244,21 @@ ruleSkill returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"title",
-						lv_title_1_0,
+						lv_title_2_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
 		)
-		otherlv_2='tags:'
+		otherlv_3='tags:'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getSkillAccess().getTagsKeyword_2());
+			newLeafNode(otherlv_3, grammarAccess.getSkillAccess().getTagsKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSkillAccess().getTagsStringListParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getSkillAccess().getTagsStringListParserRuleCall_4_0());
 				}
-				lv_tags_3_0=ruleStringList
+				lv_tags_4_0=ruleStringList
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSkillRule());
@@ -1210,7 +1266,7 @@ ruleSkill returns [EObject current=null]
 					set(
 						$current,
 						"tags",
-						lv_tags_3_0,
+						lv_tags_4_0,
 						"org.xtext.example.resume.Resume.StringList");
 					afterParserOrEnumRuleCall();
 				}

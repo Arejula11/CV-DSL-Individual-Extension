@@ -3,6 +3,8 @@
  */
 package org.xtext.example.resume.resume;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -19,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.xtext.example.resume.resume.Project#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Project#getLink <em>Link</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Project#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.xtext.example.resume.resume.Project#getFrom <em>From</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.resume.resume.ResumePackage#getProject()
@@ -136,5 +139,17 @@ public interface Project extends EObject
    * @generated
    */
   void setTags(StringList value);
+
+  /**
+   * Returns the value of the '<em><b>From</b></em>' reference list.
+   * The list contents are of type {@link org.xtext.example.resume.resume.Skill}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>From</em>' reference list.
+   * @see org.xtext.example.resume.resume.ResumePackage#getProject_From()
+   * @model
+   * @generated
+   */
+  EList<Skill> getFrom();
 
 } // Project

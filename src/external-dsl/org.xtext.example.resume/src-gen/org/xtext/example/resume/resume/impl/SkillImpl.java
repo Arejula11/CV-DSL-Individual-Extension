@@ -24,6 +24,7 @@ import org.xtext.example.resume.resume.StringList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.resume.resume.impl.SkillImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.SkillImpl#getTitle <em>Title</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.SkillImpl#getTags <em>Tags</em>}</li>
  * </ul>
@@ -32,6 +33,26 @@ import org.xtext.example.resume.resume.StringList;
  */
 public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
 {
+  /**
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
   /**
    * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -81,6 +102,31 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
   protected EClass eStaticClass()
   {
     return ResumePackage.Literals.SKILL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ResumePackage.SKILL__NAME, oldName, name));
   }
 
   /**
@@ -184,6 +230,8 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
   {
     switch (featureID)
     {
+      case ResumePackage.SKILL__NAME:
+        return getName();
       case ResumePackage.SKILL__TITLE:
         return getTitle();
       case ResumePackage.SKILL__TAGS:
@@ -202,6 +250,9 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
   {
     switch (featureID)
     {
+      case ResumePackage.SKILL__NAME:
+        setName((String)newValue);
+        return;
       case ResumePackage.SKILL__TITLE:
         setTitle((String)newValue);
         return;
@@ -222,6 +273,9 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
   {
     switch (featureID)
     {
+      case ResumePackage.SKILL__NAME:
+        setName(NAME_EDEFAULT);
+        return;
       case ResumePackage.SKILL__TITLE:
         setTitle(TITLE_EDEFAULT);
         return;
@@ -242,6 +296,8 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
   {
     switch (featureID)
     {
+      case ResumePackage.SKILL__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case ResumePackage.SKILL__TITLE:
         return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
       case ResumePackage.SKILL__TAGS:
@@ -261,7 +317,9 @@ public class SkillImpl extends MinimalEObjectImpl.Container implements Skill
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (title: ");
+    result.append(" (name: ");
+    result.append(name);
+    result.append(", title: ");
     result.append(title);
     result.append(')');
     return result.toString();

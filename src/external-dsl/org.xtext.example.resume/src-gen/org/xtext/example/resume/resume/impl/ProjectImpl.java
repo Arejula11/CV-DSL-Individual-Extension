@@ -3,8 +3,12 @@
  */
 package org.xtext.example.resume.resume.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -12,8 +16,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
 import org.xtext.example.resume.resume.Project;
 import org.xtext.example.resume.resume.ResumePackage;
+import org.xtext.example.resume.resume.Skill;
 import org.xtext.example.resume.resume.StringList;
 
 /**
@@ -29,6 +36,7 @@ import org.xtext.example.resume.resume.StringList;
  *   <li>{@link org.xtext.example.resume.resume.impl.ProjectImpl#getTechnologies <em>Technologies</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.ProjectImpl#getLink <em>Link</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.ProjectImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.xtext.example.resume.resume.impl.ProjectImpl#getFrom <em>From</em>}</li>
  * </ul>
  *
  * @generated
@@ -104,6 +112,16 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * @ordered
    */
   protected StringList tags;
+
+  /**
+   * The cached value of the '{@link #getFrom() <em>From</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFrom()
+   * @generated
+   * @ordered
+   */
+  protected EList<Skill> from;
 
   /**
    * <!-- begin-user-doc -->
@@ -332,6 +350,21 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * @generated
    */
   @Override
+  public EList<Skill> getFrom()
+  {
+    if (from == null)
+    {
+      from = new EObjectResolvingEList<Skill>(Skill.class, this, ResumePackage.PROJECT__FROM);
+    }
+    return from;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
@@ -366,6 +399,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return getLink();
       case ResumePackage.PROJECT__TAGS:
         return getTags();
+      case ResumePackage.PROJECT__FROM:
+        return getFrom();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -375,6 +410,7 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -394,6 +430,10 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return;
       case ResumePackage.PROJECT__TAGS:
         setTags((StringList)newValue);
+        return;
+      case ResumePackage.PROJECT__FROM:
+        getFrom().clear();
+        getFrom().addAll((Collection<? extends Skill>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -424,6 +464,9 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
       case ResumePackage.PROJECT__TAGS:
         setTags((StringList)null);
         return;
+      case ResumePackage.PROJECT__FROM:
+        getFrom().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -448,6 +491,8 @@ public class ProjectImpl extends MinimalEObjectImpl.Container implements Project
         return LINK_EDEFAULT == null ? link != null : !LINK_EDEFAULT.equals(link);
       case ResumePackage.PROJECT__TAGS:
         return tags != null;
+      case ResumePackage.PROJECT__FROM:
+        return from != null && !from.isEmpty();
     }
     return super.eIsSet(featureID);
   }

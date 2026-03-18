@@ -57,6 +57,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Resume.ecore#//Project/technologies"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Project/link"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Resume.ecore#//Project/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Resume.ecore#//Project/from"/>
     </genClasses>
     <genClasses ecoreClass="Resume.ecore#//Education">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Resume.ecore#//Education/degrees"/>
@@ -72,6 +73,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Resume.ecore#//Skills/skills"/>
     </genClasses>
     <genClasses ecoreClass="Resume.ecore#//Skill">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Skill/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Skill/title"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Resume.ecore#//Skill/tags"/>
     </genClasses>

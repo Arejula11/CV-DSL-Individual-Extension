@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.EnumLiteralDeclaration;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
@@ -439,6 +440,16 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cTagsKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		private final Assignment cTagsAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cTagsStringListParserRuleCall_9_0 = (RuleCall)cTagsAssignment_9.eContents().get(0);
+		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
+		private final Keyword cFromKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cFromAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final CrossReference cFromSkillCrossReference_10_1_0 = (CrossReference)cFromAssignment_10_1.eContents().get(0);
+		private final RuleCall cFromSkillIDTerminalRuleCall_10_1_0_1 = (RuleCall)cFromSkillCrossReference_10_1_0.eContents().get(1);
+		private final Group cGroup_10_2 = (Group)cGroup_10.eContents().get(2);
+		private final Keyword cCommaKeyword_10_2_0 = (Keyword)cGroup_10_2.eContents().get(0);
+		private final Assignment cFromAssignment_10_2_1 = (Assignment)cGroup_10_2.eContents().get(1);
+		private final CrossReference cFromSkillCrossReference_10_2_1_0 = (CrossReference)cFromAssignment_10_2_1.eContents().get(0);
+		private final RuleCall cFromSkillIDTerminalRuleCall_10_2_1_0_1 = (RuleCall)cFromSkillCrossReference_10_2_1_0.eContents().get(1);
 		
 		//Project:
 		//    'title:' title=STRING
@@ -446,6 +457,7 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//    'technologies:' technologies=StringList
 		//    'link:' link=STRING
 		//    'tags:' tags=StringList
+		//    ('from:' from+=[Skill]( ',' from+=[Skill])*)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -454,6 +466,7 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//'technologies:' technologies=StringList
 		//'link:' link=STRING
 		//'tags:' tags=StringList
+		//('from:' from+=[Skill]( ',' from+=[Skill])*)?
 		public Group getGroup() { return cGroup; }
 		
 		//'title:'
@@ -500,6 +513,36 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		
 		//StringList
 		public RuleCall getTagsStringListParserRuleCall_9_0() { return cTagsStringListParserRuleCall_9_0; }
+		
+		//('from:' from+=[Skill]( ',' from+=[Skill])*)?
+		public Group getGroup_10() { return cGroup_10; }
+		
+		//'from:'
+		public Keyword getFromKeyword_10_0() { return cFromKeyword_10_0; }
+		
+		//from+=[Skill]
+		public Assignment getFromAssignment_10_1() { return cFromAssignment_10_1; }
+		
+		//[Skill]
+		public CrossReference getFromSkillCrossReference_10_1_0() { return cFromSkillCrossReference_10_1_0; }
+		
+		//ID
+		public RuleCall getFromSkillIDTerminalRuleCall_10_1_0_1() { return cFromSkillIDTerminalRuleCall_10_1_0_1; }
+		
+		//( ',' from+=[Skill])*
+		public Group getGroup_10_2() { return cGroup_10_2; }
+		
+		//','
+		public Keyword getCommaKeyword_10_2_0() { return cCommaKeyword_10_2_0; }
+		
+		//from+=[Skill]
+		public Assignment getFromAssignment_10_2_1() { return cFromAssignment_10_2_1; }
+		
+		//[Skill]
+		public CrossReference getFromSkillCrossReference_10_2_1_0() { return cFromSkillCrossReference_10_2_1_0; }
+		
+		//ID
+		public RuleCall getFromSkillIDTerminalRuleCall_10_2_1_0_1() { return cFromSkillIDTerminalRuleCall_10_2_1_0_1; }
 	}
 	public class EducationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.resume.Resume.Education");
@@ -656,38 +699,46 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	public class SkillElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.resume.Resume.Skill");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cTitleKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTitleAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTitleSTRINGTerminalRuleCall_1_0 = (RuleCall)cTitleAssignment_1.eContents().get(0);
-		private final Keyword cTagsKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTagsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTagsStringListParserRuleCall_3_0 = (RuleCall)cTagsAssignment_3.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Keyword cTitleKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTitleAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTitleSTRINGTerminalRuleCall_2_0 = (RuleCall)cTitleAssignment_2.eContents().get(0);
+		private final Keyword cTagsKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cTagsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTagsStringListParserRuleCall_4_0 = (RuleCall)cTagsAssignment_4.eContents().get(0);
 		
 		//Skill:
-		//    'title:' title=STRING 'tags:' tags=StringList
+		//    name=ID 'title:' title=STRING 'tags:' tags=StringList
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'title:' title=STRING 'tags:' tags=StringList
+		//name=ID 'title:' title=STRING 'tags:' tags=StringList
 		public Group getGroup() { return cGroup; }
 		
+		//name=ID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		
 		//'title:'
-		public Keyword getTitleKeyword_0() { return cTitleKeyword_0; }
+		public Keyword getTitleKeyword_1() { return cTitleKeyword_1; }
 		
 		//title=STRING
-		public Assignment getTitleAssignment_1() { return cTitleAssignment_1; }
+		public Assignment getTitleAssignment_2() { return cTitleAssignment_2; }
 		
 		//STRING
-		public RuleCall getTitleSTRINGTerminalRuleCall_1_0() { return cTitleSTRINGTerminalRuleCall_1_0; }
+		public RuleCall getTitleSTRINGTerminalRuleCall_2_0() { return cTitleSTRINGTerminalRuleCall_2_0; }
 		
 		//'tags:'
-		public Keyword getTagsKeyword_2() { return cTagsKeyword_2; }
+		public Keyword getTagsKeyword_3() { return cTagsKeyword_3; }
 		
 		//tags=StringList
-		public Assignment getTagsAssignment_3() { return cTagsAssignment_3; }
+		public Assignment getTagsAssignment_4() { return cTagsAssignment_4; }
 		
 		//StringList
-		public RuleCall getTagsStringListParserRuleCall_3_0() { return cTagsStringListParserRuleCall_3_0; }
+		public RuleCall getTagsStringListParserRuleCall_4_0() { return cTagsStringListParserRuleCall_4_0; }
 	}
 	public class InterestsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.resume.Resume.Interests");
@@ -1451,6 +1502,7 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	//    'technologies:' technologies=StringList
 	//    'link:' link=STRING
 	//    'tags:' tags=StringList
+	//    ('from:' from+=[Skill]( ',' from+=[Skill])*)?
 	//;
 	public ProjectElements getProjectAccess() {
 		return pProject;
@@ -1498,7 +1550,7 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//Skill:
-	//    'title:' title=STRING 'tags:' tags=StringList
+	//    name=ID 'title:' title=STRING 'tags:' tags=StringList
 	//;
 	public SkillElements getSkillAccess() {
 		return pSkill;

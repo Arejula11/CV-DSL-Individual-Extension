@@ -691,6 +691,17 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
+  public EReference getProject_From()
+  {
+    return (EReference)projectEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getEducation()
   {
     return educationEClass;
@@ -812,7 +823,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
-  public EAttribute getSkill_Title()
+  public EAttribute getSkill_Name()
   {
     return (EAttribute)skillEClass.getEStructuralFeatures().get(0);
   }
@@ -823,9 +834,20 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
+  public EAttribute getSkill_Title()
+  {
+    return (EAttribute)skillEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getSkill_Tags()
   {
-    return (EReference)skillEClass.getEStructuralFeatures().get(1);
+    return (EReference)skillEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1242,6 +1264,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     createEReference(projectEClass, PROJECT__TECHNOLOGIES);
     createEAttribute(projectEClass, PROJECT__LINK);
     createEReference(projectEClass, PROJECT__TAGS);
+    createEReference(projectEClass, PROJECT__FROM);
 
     educationEClass = createEClass(EDUCATION);
     createEReference(educationEClass, EDUCATION__DEGREES);
@@ -1257,6 +1280,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     createEReference(skillsEClass, SKILLS__SKILLS);
 
     skillEClass = createEClass(SKILL);
+    createEAttribute(skillEClass, SKILL__NAME);
     createEAttribute(skillEClass, SKILL__TITLE);
     createEReference(skillEClass, SKILL__TAGS);
 
@@ -1393,6 +1417,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     initEReference(getProject_Technologies(), this.getStringList(), null, "technologies", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProject_Link(), ecorePackage.getEString(), "link", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProject_Tags(), this.getStringList(), null, "tags", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProject_From(), this.getSkill(), null, "from", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(educationEClass, Education.class, "Education", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEducation_Degrees(), this.getDegree(), null, "degrees", null, 0, -1, Education.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1408,6 +1433,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     initEReference(getSkills_Skills(), this.getSkill(), null, "skills", null, 0, -1, Skills.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(skillEClass, Skill.class, "Skill", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSkill_Name(), ecorePackage.getEString(), "name", null, 0, 1, Skill.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSkill_Title(), ecorePackage.getEString(), "title", null, 0, 1, Skill.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSkill_Tags(), this.getStringList(), null, "tags", null, 0, 1, Skill.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

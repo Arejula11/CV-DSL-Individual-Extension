@@ -1,0 +1,67 @@
+Metadata 
+    style: "Minimali" 
+    font: "Calibri" 
+    imgPath: "/assets/profile_pic_emma.jpg"
+
+Userdata 
+    name: "Emma Johnson" 
+    email: "emma.johnson@email.com" 
+    telephoneNumber: "+1 415 555 9021" 
+    direction: "742 Evergreen Terrace" 
+    city: "San Francisco" 
+    country: "USA"
+
+Experience language: "en"
+    title: "Senior Backend Engineer" 
+    description: ["Designed scalable REST APIs", "Led migration to cloud-native architecture"] 
+    company: "CloudNova" 
+    startDate: "2021-02-15" 
+    endDate: "2024-10-31" 
+    tags: ["Backend", "Cloud", "Python"]
+
+    title: "Software Engineer" 
+    description: ["Built internal tooling for analytics", "Improved CI/CD pipelines"] 
+    company: "DataBridge" 
+    startDate: "2018-06-01" 
+    endDate: "2021-01-30" 
+    tags: ["DevOps", "Automation", "Analytics"]
+
+Projects language: "en"
+    title: "Smart Task Manager"
+    description: ["Productivity web app with AI-based prioritization"]
+    technologies: ["FastAPI", "React", "PostgreSQL"]
+    link: "https://github.com/emmaj/smart-task-manager"
+    tags: ["AI", "WebApp"]
+    from: sk1, sk2
+
+Education language: "en"
+    title: "BSc in Computer Science" 
+    institution: "University of California, Berkeley" 
+    graduationDate: "2018" 
+    country: "USA" 
+    tags: ["Bachelor", "Computer Science"]
+
+Skills language: "en"
+    sk1 title: "Programming Languages" 
+    tags: ["Python", "Java", "TypeScript"]
+    
+    sk2 title: "Tools"
+    tags: ["GitHub Actions", "Docker", "Kubernetes"]
+
+Skills language: "es"
+	sk3 title: "Lenguajes de programación" 
+    tags: ["Python", "Java", "TypeScript"]
+
+Languages language: "en"
+    tags: ["English", "Spanish"]
+
+
+Metrics language: "en"
+	Metric "Años de experiencia" = 2025 - 2020
+
+Customization 
+include Profile where language "en"
+include Education where endDate before "2020"
+include Skills where all
+include Metrics where all
+include Projects where tags include "AI"

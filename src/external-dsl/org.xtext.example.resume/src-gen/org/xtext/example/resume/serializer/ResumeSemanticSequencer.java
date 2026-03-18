@@ -437,29 +437,18 @@ public class ResumeSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Project returns Project
 	 *
 	 * Constraint:
-	 *     (title=STRING description=StringList technologies=StringList link=STRING tags=StringList)
+	 *     (
+	 *         title=STRING 
+	 *         description=StringList 
+	 *         technologies=StringList 
+	 *         link=STRING 
+	 *         tags=StringList 
+	 *         (from+=[Skill|ID] from+=[Skill|ID]*)?
+	 *     )
 	 * </pre>
 	 */
 	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.PROJECT__TITLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.PROJECT__TITLE));
-			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.PROJECT__DESCRIPTION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.PROJECT__DESCRIPTION));
-			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.PROJECT__TECHNOLOGIES) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.PROJECT__TECHNOLOGIES));
-			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.PROJECT__LINK) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.PROJECT__LINK));
-			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.PROJECT__TAGS) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.PROJECT__TAGS));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getProjectAccess().getTitleSTRINGTerminalRuleCall_1_0(), semanticObject.getTitle());
-		feeder.accept(grammarAccess.getProjectAccess().getDescriptionStringListParserRuleCall_3_0(), semanticObject.getDescription());
-		feeder.accept(grammarAccess.getProjectAccess().getTechnologiesStringListParserRuleCall_5_0(), semanticObject.getTechnologies());
-		feeder.accept(grammarAccess.getProjectAccess().getLinkSTRINGTerminalRuleCall_7_0(), semanticObject.getLink());
-		feeder.accept(grammarAccess.getProjectAccess().getTagsStringListParserRuleCall_9_0(), semanticObject.getTags());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -507,19 +496,22 @@ public class ResumeSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Skill returns Skill
 	 *
 	 * Constraint:
-	 *     (title=STRING tags=StringList)
+	 *     (name=ID title=STRING tags=StringList)
 	 * </pre>
 	 */
 	protected void sequence_Skill(ISerializationContext context, Skill semanticObject) {
 		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.SKILL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.SKILL__NAME));
 			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.SKILL__TITLE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.SKILL__TITLE));
 			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.SKILL__TAGS) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.SKILL__TAGS));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSkillAccess().getTitleSTRINGTerminalRuleCall_1_0(), semanticObject.getTitle());
-		feeder.accept(grammarAccess.getSkillAccess().getTagsStringListParserRuleCall_3_0(), semanticObject.getTags());
+		feeder.accept(grammarAccess.getSkillAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getSkillAccess().getTitleSTRINGTerminalRuleCall_2_0(), semanticObject.getTitle());
+		feeder.accept(grammarAccess.getSkillAccess().getTagsStringListParserRuleCall_4_0(), semanticObject.getTags());
 		feeder.finish();
 	}
 	

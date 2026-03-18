@@ -102,11 +102,11 @@ customizer.add_filter("«rule.sectionType.literal»", "ALL", "None")
        '''
        
         def dispatch compileSection(Projects proj) '''
-            projects = cv.add_projects("«proj.language»")
-            «FOR p : proj.projects»
-            projects.add_project("«p.title»", "«p.link»", «p.description.compileList», «p.technologies.compileList», «p.tags.compileList»)
-            «ENDFOR»
-        '''
+	        projects = cv.add_projects("«proj.language»")
+	        «FOR p : proj.projects»
+	        projects.add_project("«p.title»", "«p.link»", «p.description.compileList», «p.technologies.compileList», «p.tags.compileList», [«FOR s : p.from SEPARATOR ', '»"«s.title»: «FOR tag : s.tags.values SEPARATOR ', '»«tag»«ENDFOR»"«ENDFOR»])
+        «ENDFOR»
+    '''
     
         def dispatch compileSection(Education ed) '''
             education = cv.add_education("«ed.language»")

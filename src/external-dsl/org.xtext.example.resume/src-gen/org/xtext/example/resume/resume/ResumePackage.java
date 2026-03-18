@@ -463,13 +463,22 @@ public interface ResumePackage extends EPackage
   int PROJECT__TAGS = 4;
 
   /**
+   * The feature id for the '<em><b>From</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROJECT__FROM = 5;
+
+  /**
    * The number of structural features of the '<em>Project</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROJECT_FEATURE_COUNT = 5;
+  int PROJECT_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link org.xtext.example.resume.resume.impl.EducationImpl <em>Education</em>}' class.
@@ -620,13 +629,22 @@ public interface ResumePackage extends EPackage
   int SKILL = 11;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SKILL__NAME = 0;
+
+  /**
    * The feature id for the '<em><b>Title</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SKILL__TITLE = 0;
+  int SKILL__TITLE = 1;
 
   /**
    * The feature id for the '<em><b>Tags</b></em>' containment reference.
@@ -635,7 +653,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SKILL__TAGS = 1;
+  int SKILL__TAGS = 2;
 
   /**
    * The number of structural features of the '<em>Skill</em>' class.
@@ -644,7 +662,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SKILL_FEATURE_COUNT = 2;
+  int SKILL_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.xtext.example.resume.resume.impl.InterestsImpl <em>Interests</em>}' class.
@@ -1472,6 +1490,17 @@ public interface ResumePackage extends EPackage
   EReference getProject_Tags();
 
   /**
+   * Returns the meta object for the reference list '{@link org.xtext.example.resume.resume.Project#getFrom <em>From</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>From</em>'.
+   * @see org.xtext.example.resume.resume.Project#getFrom()
+   * @see #getProject()
+   * @generated
+   */
+  EReference getProject_From();
+
+  /**
    * Returns the meta object for class '{@link org.xtext.example.resume.resume.Education <em>Education</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1587,6 +1616,17 @@ public interface ResumePackage extends EPackage
    * @generated
    */
   EClass getSkill();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.resume.resume.Skill#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.xtext.example.resume.resume.Skill#getName()
+   * @see #getSkill()
+   * @generated
+   */
+  EAttribute getSkill_Name();
 
   /**
    * Returns the meta object for the attribute '{@link org.xtext.example.resume.resume.Skill#getTitle <em>Title</em>}'.
@@ -2256,6 +2296,14 @@ public interface ResumePackage extends EPackage
     EReference PROJECT__TAGS = eINSTANCE.getProject_Tags();
 
     /**
+     * The meta object literal for the '<em><b>From</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROJECT__FROM = eINSTANCE.getProject_From();
+
+    /**
      * The meta object literal for the '{@link org.xtext.example.resume.resume.impl.EducationImpl <em>Education</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2350,6 +2398,14 @@ public interface ResumePackage extends EPackage
      * @generated
      */
     EClass SKILL = eINSTANCE.getSkill();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SKILL__NAME = eINSTANCE.getSkill_Name();
 
     /**
      * The meta object literal for the '<em><b>Title</b></em>' attribute feature.

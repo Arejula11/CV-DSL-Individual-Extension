@@ -282,7 +282,36 @@ public class ResumeGenerator extends AbstractGenerator {
         _builder.append(", ");
         CharSequence _compileList_2 = this.compileList(p.getTags());
         _builder.append(_compileList_2);
-        _builder.append(")");
+        _builder.append(", [");
+        {
+          EList<Skill> _from = p.getFrom();
+          boolean _hasElements = false;
+          for(final Skill s : _from) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            _builder.append("\"");
+            String _title_1 = s.getTitle();
+            _builder.append(_title_1);
+            _builder.append(": ");
+            {
+              EList<String> _values = s.getTags().getValues();
+              boolean _hasElements_1 = false;
+              for(final String tag : _values) {
+                if (!_hasElements_1) {
+                  _hasElements_1 = true;
+                } else {
+                  _builder.appendImmediate(", ", "");
+                }
+                _builder.append(tag);
+              }
+            }
+            _builder.append("\"");
+          }
+        }
+        _builder.append("])");
         _builder.newLineIfNotEmpty();
       }
     }

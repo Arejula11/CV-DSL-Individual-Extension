@@ -44,6 +44,7 @@ Project:
     'technologies:' technologies=StringList 
     'link:' link=STRING 
     'tags:' tags=StringList
+    ('from:' from+=[Skill]( ',' from+=[Skill])*)?
 ;
 
 Education:
@@ -63,7 +64,7 @@ Skills:
 ;
 
 Skill:
-    'title:' title=STRING 'tags:' tags=StringList
+    name=ID 'title:' title=STRING 'tags:' tags=StringList
 ;
 
 Interests:
