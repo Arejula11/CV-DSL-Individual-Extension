@@ -1,3 +1,9 @@
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+from urllib.parse import urlparse
+
 class Metadata:
     def __init__(self, style: str, font: str, img_path: str):
         self.style = style
@@ -5,13 +11,16 @@ class Metadata:
         self.img_path = img_path
 
 class UserData:
-    def __init__(self, name, email, telephone, direction, country, city):
+    def __init__(self, name, email, telephone, direction, country, city, linkedin=None, github=None, blog=None):
         self.name = name
         self.email = email
         self.telephone = telephone
         self.direction = direction
         self.country = country
         self.city = city
+        self.linkedin = linkedin
+        self.github = github
+        self.blog = blog
 
 class Job:
     def __init__(self, title, company, start_date, end_date, description, tags):
@@ -181,8 +190,8 @@ class Profile:
         self.metadata = Metadata(style, font, imgPath)
         return self
 
-    def with_userdata(self, name, email, telephone, direction, country, city):
-        self.userdata = UserData(name, email, telephone, direction, country, city)
+    def with_userdata(self, name, email, telephone, direction, country, city, linkedin=None, github=None, blog=None):
+        self.userdata = UserData(name, email, telephone, direction, country, city, linkedin, github, blog)
         return self
 
     def add_experience(self, language):
@@ -225,48 +234,109 @@ class Profile:
         if self.customizer:
             self.customizer.apply_filters()
 
-        print(f"==========================================")
-        print(f"CV DE: {self.userdata.name if self.userdata else self.name}")
-        print(f"==========================================")
-        print(f"User Data: {self.userdata.email if self.userdata else 'N/A'} | {self.userdata.telephone if self.userdata else 'N/A'} | {self.userdata.direction if self.userdata else 'N/A'}, {self.userdata.city if self.userdata else 'N/A'}, {self.userdata.country if self.userdata else 'N/A'}")
-        print(f"==========================================")
-        
+        def _date_range(start_date, end_date):
+            if start_date and end_date:
+                return f"{start_date} - {end_date}"
+            return start_date or end_date or ""
+
+        def _project_short_link(link):
+            if not link:
+                return ""
+            parsed = urlparse(link if "://" in link else f"https://{link}")
+            host = parsed.netloc or parsed.path
+            path = parsed.path if parsed.netloc else ""
+            short_link = f"{host}{path}".strip("/")
+            return short_link or link
+
+        markdown_lines = []
+        markdown_lines.append(f"# {self.userdata.name if self.userdata else self.name}")
+        markdown_lines.append("## Contact Information")
+        markdown_lines.append(f"- Email: {self.userdata.email if self.userdata else 'N/A'}")
+        markdown_lines.append(f"- Phone: {self.userdata.telephone if self.userdata else 'N/A'}")
+        if self.userdata and self.userdata.linkedin:
+            markdown_lines.append(f"- LinkedIn: {self.userdata.linkedin}")
+        if self.userdata and self.userdata.github:
+            markdown_lines.append(f"- GitHub: {self.userdata.github}")
+        if self.userdata and self.userdata.blog:
+            markdown_lines.append(f"- Blog: {self.userdata.blog}")
+
         for section in self.sections:
             tipo = section.section_type
-            print(f"\n--- SECCIÓN: {tipo} ({section.language}) ---")
-            
+            markdown_lines.append("")
+            markdown_lines.append(f"## {tipo}")
+
             if isinstance(section, Experience):
                 for job in section.jobs:
-                    print(f"  * {job.title} en {job.company} ({job.start_date} - {job.end_date})")
-            
+                    markdown_lines.append("")
+                    markdown_lines.append(f"### {job.title} | {job.company}")
+                    markdown_lines.append(f"> {_date_range(job.start_date, job.end_date)}")
+                    for line in job.description:
+                        markdown_lines.append(f"- {line}")
+
             elif isinstance(section, Education):
                 for degree in section.degrees:
-                    print(f"  * {degree.title} en {degree.institution} ({degree.graduation_date})")
+                    title_line = degree.title
+                    if degree.institution:
+                        title_line = f"{degree.title} | {degree.institution}"
+                    markdown_lines.append("")
+                    markdown_lines.append(f"### {title_line}")
+                    if degree.graduation_date:
+                        markdown_lines.append(f"> {degree.graduation_date}")
+                    for tag in degree.tags:
+                        markdown_lines.append(f"- {tag}")
             
             elif isinstance(section, Projects):
                 for p in section.projects:
-                    print(f"  * {p.title} (Link: {p.link})")
+                    header = f"{p.title}"
+                    if p.link:
+                        header = f"{header} | Link| {p.link}"
+                    markdown_lines.append("")
+                    markdown_lines.append(f"### {header}")
+                    for line in p.description:
+                        markdown_lines.append(f"- {line}")
+                    if p.technologies:
+                        markdown_lines.append(f"- Tools Used: {', '.join(p.technologies)}")
                     if p.referenced_skills:
-                        print(f"    Skills aplicadas:")
+                        markdown_lines.append("- Skills Applied:")
                         for ref in p.referenced_skills:
-                            print(f"      - {ref}")
+                            markdown_lines.append(f"  - {ref}")
             
             elif isinstance(section, Skills):
                 for skill in section.skills:
-                    print(f"  * {skill.title}: {', '.join(skill.attributes)}")
+                    markdown_lines.append(f"- {skill.title}: {', '.join(skill.attributes)}")
 
             elif isinstance(section, Interests):
                 for interest in section.values:
-                    print(f"  * {interest}")
+                    markdown_lines.append(f"- {interest}")
             
             elif isinstance(section, Languages):
                 for language in section.values:
-                    print(f"  * {language}")
+                    markdown_lines.append(f"- {language}")
             
             # --- NUEVA LÓGICA DE IMPRESIÓN PARA METRICS ---
             elif isinstance(section, Metrics):
                 for metric in section.metrics_list:
-                    print(f"  * {metric.name}: {metric.value}")
-                    
-        print(f"\n==========================================")
+                    markdown_lines.append(f"- {metric.name}: {metric.value}")
+
+        markdown_content = "\n".join(markdown_lines).rstrip() + "\n"
+
+        script_dir = Path(__file__).resolve().parent
+        render_script = script_dir / "render.py"
+
+        with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8", dir=script_dir) as temp_markdown:
+            temp_markdown.write(markdown_content)
+            markdown_path = Path(temp_markdown.name)
+
+        try:
+            subprocess.run(
+                [sys.executable, str(render_script), str(markdown_path)],
+                cwd=script_dir,
+                check=True,
+            )
+        finally:
+            try:
+                markdown_path.unlink(missing_ok=True)
+            except OSError:
+                pass
+
         return self
