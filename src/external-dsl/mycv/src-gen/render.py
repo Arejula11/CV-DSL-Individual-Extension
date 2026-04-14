@@ -34,6 +34,7 @@ def compile_latex(tex_file):
 # Data containers
 # -----------------------------
 contact = []
+metadata = {}   # dict: { "Style": "Minima", "Font": "Calibri", ... }
 education = []
 experience = []
 projects = []
@@ -69,6 +70,7 @@ def flush_subsection():
         experience.append(current_subsection)
     elif current_section == "Projects":
         projects.append(current_subsection)
+    # Metadata is handled directly via bullet parsing below, not as subsections
 
     current_subsection = None
 
@@ -96,6 +98,12 @@ for line in lines:
     if current_section == "Contact Information" and line.startswith("- "):
         key, value = line[2:].split(":", 1)
         contact.append({key.strip(): value.strip()})
+        continue
+
+    # Metadata fields
+    if current_section == "Metadata" and line.startswith("- "):
+        key, value = line[2:].split(":", 1)
+        metadata[key.strip()] = value.strip()
         continue
 
     # Subsection
@@ -131,7 +139,6 @@ latex_header += "\n\\vspace{5 pt}\n"
 latex_header += "\\normalsize\n"
 
 contacts_len = len(contact)
-
 for i, info in enumerate(contact):
     for key, value in info.items():
         if key == "Email":
@@ -142,7 +149,7 @@ for i, info in enumerate(contact):
             latex_header += (
                 f"\\mbox{{\\hrefWithoutArrow{{tel:{value}}}{{{value}}}}}%\n"
             )
-        elif key == "LinkedIn":
+        elif key == "Linkedin":
             latex_header += (
                 f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{LinkedIn}}}}}}%\n"
             )
@@ -268,7 +275,25 @@ print("Projects section created.")
 # -----------------------------
 # Template filling
 # -----------------------------
-template_file = "./input/latexTemplate.tex"
+
+# Map style names (case-insensitive) to their template filenames
+STYLE_TO_TEMPLATE = {
+    "minimal": "minimalLatexTemplate.tex",
+    "modern":   "modernLatexTemplate.tex",
+}
+
+selected_style = metadata.get("Style", "").strip().lower()
+template_filename = STYLE_TO_TEMPLATE.get(selected_style)
+
+if template_filename is None:
+    available = ", ".join(f'"{k}"' for k in STYLE_TO_TEMPLATE)
+    print(
+        f"Warning: unknown style \"{metadata.get('Style', '')}\". "
+        f"Available styles: {available}. Falling back to \"minimal\"."
+    )
+    template_filename = STYLE_TO_TEMPLATE["minimal"]
+
+template_file = "./input/" + template_filename
 output_file = "./output/output_cv.tex"
 
 with open(template_file, "r", encoding="utf-8") as f:

@@ -1,0 +1,214 @@
+\documentclass[10pt, a4paper]{article}
+
+% ─── Geometry ────────────────────────────────────────────────────────────────
+\usepackage[
+    ignoreheadfoot,
+    top=0pt,
+    bottom=1cm,
+    left=0pt,
+    right=2cm,
+    footskip=1.0cm,
+]{geometry}
+
+% ─── Core packages ───────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+\usepackage{bookmark}
+\usepackage{lastpage}
+
+% ─── Colours ─────────────────────────────────────────────────────────────────
+\definecolor{accentColor}{RGB}{30, 64, 110}      % deep navy
+\definecolor{accentLight}{RGB}{220, 230, 242}    % pale navy tint
+\definecolor{sidebarBg}{RGB}{245, 247, 250}      % very light grey
+\definecolor{primaryColor}{RGB}{30, 64, 110}
+\definecolor{bodyText}{RGB}{40, 40, 40}
+\definecolor{mutedText}{RGB}{110, 110, 110}
+
+% ─── Hyperref ────────────────────────────────────────────────────────────────
+\usepackage[
+    pdftitle={CV},
+    pdfauthor={CV},
+    pdfcreator={LaTeX},
+    colorlinks=true,
+    urlcolor=accentColor
+]{hyperref}
+
+% ─── Font ────────────────────────────────────────────────────────────────────
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+\usepackage{charter}
+
+% ─── Global settings ─────────────────────────────────────────────────────────
+\color{bodyText}
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.20cm}
+\pagenumbering{gobble}
+
+% ─── Section style ───────────────────────────────────────────────────────────
+% Coloured left rule + small-caps label in accent colour
+\titleformat{\section}
+    {\needspace{4\baselineskip}\bfseries\large\color{accentColor}}
+    {}{0pt}
+    {}
+    [\color{accentColor}\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{-1pt}{0.25cm}{0.20cm}
+
+% ─── List environments ───────────────────────────────────────────────────────
+\renewcommand\labelitemi{{\small\color{accentColor}$\bullet$}}
+
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.08cm, parsep=0.08cm, partopsep=0pt,
+        itemsep=0pt, leftmargin=0cm+10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.08cm, parsep=0.08cm, partopsep=0pt,
+        itemsep=0pt, leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+}
+
+% ─── Column entry environments ───────────────────────────────────────────────
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{0cm+0.00001cm}{0cm+0.00001cm}
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn\raggedleft\small\color{mutedText}\secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{,\fill, 4.5cm}
+    \begin{paracol}{3}
+    {\raggedright #2}\switchcolumn
+}{
+    \switchcolumn\raggedleft\thirdColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+% ─── AND separator (contact row) ─────────────────────────────────────────────
+\let\hrefWithoutArrow\href
+
+%═══════════════════════════════════════════════════════════════════════════════
+%  DOCUMENT
+%═══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+\newcommand{\AND}{\unskip
+    \cleaders\copy\ANDbox\hskip\wd\ANDbox
+    \ignorespaces
+}
+\newsavebox\ANDbox
+\sbox\ANDbox{\textcolor{accentColor}{$|$}}
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  HEADER  — full-width accent band with photo on the right
+% ─────────────────────────────────────────────────────────────────────────────
+\newlength{\headerHeight}
+\setlength{\headerHeight}{4.2cm}
+
+\newlength{\photoSize}
+\setlength{\photoSize}{2.8cm}
+
+\noindent
+\begin{tikzpicture}[remember picture, overlay]
+    % Full-width accent rectangle (flush with page top & both sides)
+    \fill[accentColor]
+        ([xshift=0cm, yshift=0cm]current page.north west)
+        rectangle
+        ([xshift=\paperwidth, yshift=-\headerHeight]current page.north west);
+    % Lighter tint strip at the very bottom of the header band
+    \fill[accentLight]
+        ([xshift=0cm, yshift=-\headerHeight+0.18cm]current page.north west)
+        rectangle
+        ([xshift=\paperwidth, yshift=-\headerHeight]current page.north west);
+\end{tikzpicture}%
+%
+\vspace*{0.55cm}%   push content below page top
+%
+\hspace{2cm}% left margin to match body text
+\begin{minipage}[t]{\dimexpr\linewidth-2cm-\photoSize-0.6cm\relax}
+    \vspace{0pt}
+    % Name
+    {\fontsize{26pt}{26pt}\selectfont\color{white}\textbf{{{HEADER}}}
+    \par}
+\end{minipage}%
+\hfill
+% Circular profile photo
+\begin{tikzpicture}[baseline=(img.south)]
+    \clip[preaction={fill=white}]
+        (0,0) circle (\photoSize/2);
+    \node[inner sep=0] (img) at (0,0)
+        {\includegraphics[width=\photoSize, height=\photoSize,
+                          keepaspectratio=false]{./assets/profile_pic_are.jpg}};
+\end{tikzpicture}%
+\hspace{0.4cm}%
+
+\vspace{0.55cm}   % gap between header band and body
+
+% ─────────────────────────────────────────────────────────────────────────────
+%  BODY — right margin is already set by geometry; add left margin manually
+% ─────────────────────────────────────────────────────────────────────────────
+\hspace{2cm}%
+\begin{minipage}{\dimexpr\linewidth\relax}
+
+% ── Education ────────────────────────────────────────────────────────────────
+\vspace{0.10cm}
+\section{Education}
+{{EDUCATION}}
+
+% ── Experience ───────────────────────────────────────────────────────────────
+\vspace{0.10cm}
+\section{Experience}
+{{EXPERIENCE}}
+
+% ── Projects ─────────────────────────────────────────────────────────────────
+\vspace{0.10cm}
+\section{Projects}
+{{PROJECTS}}
+
+\end{minipage}
+
+\end{document}

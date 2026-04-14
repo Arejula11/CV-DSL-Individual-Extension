@@ -11,9 +11,10 @@ class Metadata:
         self.img_path = img_path
 
 class UserData:
-    def __init__(self, name, email, telephone, direction, country, city, linkedin=None, github=None, blog=None):
+    def __init__(self, name, email, linkedin, telephone, direction, country, city, github=None, blog=None):
         self.name = name
         self.email = email
+        self.linkedin = linkedin
         self.telephone = telephone
         self.direction = direction
         self.country = country
@@ -186,12 +187,12 @@ class Profile:
         self.sections = []
         self.customizer = None # Añadido por seguridad para evitar errores si no hay Customization
 
-    def with_metadata(self, style, font, imgPath):
-        self.metadata = Metadata(style, font, imgPath)
+    def with_metadata(self, style, font, img_path):
+        self.metadata = Metadata(style, font, img_path)
         return self
 
-    def with_userdata(self, name, email, telephone, direction, country, city, linkedin=None, github=None, blog=None):
-        self.userdata = UserData(name, email, telephone, direction, country, city, linkedin, github, blog)
+    def with_userdata(self, name, email, linkedin, telephone, direction, country, city, github=None, blog=None):
+        self.userdata = UserData(name, email, linkedin, telephone, direction, country, city, github, blog)
         return self
 
     def add_experience(self, language):
@@ -250,6 +251,11 @@ class Profile:
 
         markdown_lines = []
         markdown_lines.append(f"# {self.userdata.name if self.userdata else self.name}")
+        markdown_lines.append("## Metadata")
+        if self.metadata:
+            markdown_lines.append(f"- Style: {self.metadata.style}")
+            markdown_lines.append(f"- Font: {self.metadata.font}")
+            markdown_lines.append(f"- Image Path: {self.metadata.img_path}")
         markdown_lines.append("## Contact Information")
         markdown_lines.append(f"- Email: {self.userdata.email if self.userdata else 'N/A'}")
         markdown_lines.append(f"- Phone: {self.userdata.telephone if self.userdata else 'N/A'}")
@@ -295,11 +301,10 @@ class Profile:
                     for line in p.description:
                         markdown_lines.append(f"- {line}")
                     if p.technologies:
-                        markdown_lines.append(f"- Tools Used: {', '.join(p.technologies)}")
+                        markdown_lines.append(f"- Tools Used: {', '.join(p.technologies)}.")
                     if p.referenced_skills:
-                        markdown_lines.append("- Skills Applied:")
                         for ref in p.referenced_skills:
-                            markdown_lines.append(f"  - {ref}")
+                            markdown_lines.append(f"  -{ref}")
             
             elif isinstance(section, Skills):
                 for skill in section.skills:

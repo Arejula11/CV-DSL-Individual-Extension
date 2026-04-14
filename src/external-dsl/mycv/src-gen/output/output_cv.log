@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.13)  13 APR 2026 15:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.13)  14 APR 2026 15:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,9 +566,9 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 190.
+(Font)              <9> on input line 194.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 190.
+(Font)              <6> on input line 194.
  [1
 
 {/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
@@ -590,20 +590,20 @@ L3 programming layer <2026-01-19>
 Here is how much of TeX's memory you used:
  15482 strings out of 467525
  261281 string characters out of 5418982
- 682794 words of memory out of 5000000
+ 697794 words of memory out of 5000000
  44191 multiletter control sequences out of 15000+600000
  660553 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,7n,84p,312b,463s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,7n,84p,322b,463s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb><
 /usr/local/texlive/2026/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></us
 r/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/te
 xlive/2026/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2026/
 texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on output_cv.pdf (1 page, 61547 bytes).
+Output written on output_cv.pdf (1 page, 67137 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 61 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  5 named destinations out of 1000 (max. 500000)
  25 words of extra memory for PDF output out of 10000 (max. 10000000)
 
