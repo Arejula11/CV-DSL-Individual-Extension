@@ -134,38 +134,54 @@ print("Markdown file read. Creating the CV.")
 # Header generation
 # -----------------------------
 latex_header = ""
-latex_header += f"\\fontsize{{25 pt}}{{25 pt}}\\selectfont {userName}\n"
-latex_header += "\n\\vspace{5 pt}\n"
-latex_header += "\\normalsize\n"
 
+# Note: Using "Style" with a capital S because the markdown parser preserves case from the key.
+style_name = metadata.get("Style", "minimal").strip().lower()
 contacts_len = len(contact)
-for i, info in enumerate(contact):
-    for key, value in info.items():
-        if key == "Email":
-            latex_header += (
-                f"\\mbox{{\\hrefWithoutArrow{{mailto:{value}}}{{\\texttt{{{value}}}}}}}%\n"
-            )
-        elif key == "Phone":
-            latex_header += (
-                f"\\mbox{{\\hrefWithoutArrow{{tel:{value}}}{{{value}}}}}%\n"
-            )
-        elif key == "Linkedin":
-            latex_header += (
-                f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{LinkedIn}}}}}}%\n"
-            )
-        elif key == "GitHub":
-            latex_header += (
-                f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{GitHub}}}}}}%\n"
-            )
-        else:
-            latex_header += (
-                f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{{key}}}}}}}%\n"
-            )
 
-        if i < contacts_len - 1:
-            latex_header += "\\kern 5.0 pt%\n"
-            latex_header += "\\AND%\n"
-            latex_header += "\\kern 5.0 pt%\n"
+if style_name == "minimal":
+    latex_header += f"\\textbf{{\\fontsize{{25 pt}}{{25 pt}}\\selectfont {userName}}}\n"
+    latex_header += "\n\\vspace{5 pt}\n"
+    latex_header += "\\normalsize\n"
+
+    for i, info in enumerate(contact):
+        for key, value in info.items():
+            if key == "Email":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{mailto:{value}}}{{\\texttt{{{value}}}}}}}%\n"
+            elif key == "Phone":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{tel:{value}}}{{{value}}}}}%\n"
+            elif key == "Linkedin":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{LinkedIn}}}}}}%\n"
+            elif key == "GitHub":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{GitHub}}}}}}%\n"
+            else:
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{{key}}}}}}}%\n"
+
+            if i < contacts_len - 1:
+                latex_header += "\\kern 5.0 pt%\n\\AND%\n\\kern 5.0 pt%\n"
+
+elif style_name == "modern":
+    latex_header += f"\\textbf{{\\fontsize{{27 pt}}{{29 pt}}\\selectfont {userName}}}\n"
+    latex_header += "\n\\vspace{5 pt}\n"
+    latex_header += "\\small\\color{mutedText}\n"
+    
+    for i, info in enumerate(contact):
+        for key, value in info.items():
+            key_normalized = key.strip().lower()
+
+            if key_normalized == "email":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{mailto:{value}}}{{\\texttt{{{value}}}}}}}%\n"
+            elif key_normalized == "phone":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{tel:{value}}}{{{value}}}}}%\n"
+            elif key_normalized == "linkedin":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{LinkedIn}}}}}}%\n"
+            elif key_normalized == "github":
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{GitHub}}}}}}%\n"
+            else:
+                latex_header += f"\\mbox{{\\hrefWithoutArrow{{{value}}}{{\\texttt{{{key}}}}}}}%\n"
+
+            if i < contacts_len - 1:
+                latex_header += "\\kern 6.0pt{\\color{accentColor}$\\cdot$}\\kern 6.0pt%\n"
 
 print("Header created.")
 
@@ -285,6 +301,42 @@ STYLE_TO_TEMPLATE = {
 selected_style = metadata.get("Style", "").strip().lower()
 template_filename = STYLE_TO_TEMPLATE.get(selected_style)
 
+raw_image_path = metadata.get("Image Path", "").strip()
+latex_image_path = "__MISSING_IMAGE__"
+if raw_image_path:
+    script_dir = Path(__file__).resolve().parent
+    normalized_image_path = raw_image_path[1:] if raw_image_path.startswith("/") else raw_image_path
+
+    raw_path = Path(raw_image_path)
+    normalized_path = Path(normalized_image_path)
+
+    candidates = []
+    if raw_path.is_absolute():
+        candidates.append(raw_path)
+    else:
+        candidates.append((script_dir / raw_path).resolve())
+
+    candidates.append((script_dir / normalized_path).resolve())
+
+    # If path was provided from repo root (e.g. /assets/photo.jpg), also try ancestors.
+    for parent in script_dir.parents:
+        candidates.append((parent / normalized_path).resolve())
+
+    def _with_extension_fallback(path_obj):
+        if path_obj.exists():
+            return path_obj
+        for ext in (".jpg", ".jpeg", ".png", ".webp"):
+            alt = path_obj.with_suffix(ext)
+            if alt.exists():
+                return alt
+        return None
+
+    for candidate in candidates:
+        resolved = _with_extension_fallback(candidate)
+        if resolved:
+            latex_image_path = resolved.as_posix()
+            break
+
 if template_filename is None:
     available = ", ".join(f'"{k}"' for k in STYLE_TO_TEMPLATE)
     print(
@@ -303,6 +355,7 @@ template = template.replace("{{HEADER}}", latex_header)
 template = template.replace("{{EDUCATION}}", latex_education)
 template = template.replace("{{EXPERIENCE}}", latex_experience)
 template = template.replace("{{PROJECTS}}", latex_projects)
+template = template.replace("{{IMAGE_PATH}}", latex_image_path)
 
 with open(output_file, "w", encoding="utf-8") as f:
     f.write(template)

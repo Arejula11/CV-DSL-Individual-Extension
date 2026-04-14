@@ -4,7 +4,7 @@ from Models import Profile, Customization
 
 cv = Profile("Miguel Aréjula Aísa")
 
-cv.with_metadata("Minimal", "Calibri", "/assets/profile_pic_are.jpg")
+cv.with_metadata("modern", "Calibri", "/assets/profile_pic_are.jpg")
 cv.with_userdata(
     "Miguel Aréjula Aísa", 
     "arejula10@email.com", 

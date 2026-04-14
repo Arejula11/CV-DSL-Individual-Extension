@@ -26,7 +26,6 @@
 \usepackage{ifthen}
 \usepackage{needspace}
 \usepackage{iftex}
-\usepackage{bookmark}
 \usepackage{lastpage}
 
 % ─── Colours ─────────────────────────────────────────────────────────────────
@@ -45,6 +44,7 @@
     colorlinks=true,
     urlcolor=accentColor
 ]{hyperref}
+\usepackage{bookmark}
 
 % ─── Font ────────────────────────────────────────────────────────────────────
 \ifPDFTeX
@@ -144,55 +144,46 @@
 \sbox\ANDbox{\textcolor{accentColor}{$|$}}
 
 % ─────────────────────────────────────────────────────────────────────────────
-%  HEADER  — full-width accent band with photo on the right
+%  HEADER  — clean top layout with aligned profile photo
 % ─────────────────────────────────────────────────────────────────────────────
-\newlength{\headerHeight}
-\setlength{\headerHeight}{4.2cm}
-
 \newlength{\photoSize}
-\setlength{\photoSize}{2.8cm}
+\setlength{\photoSize}{2.55cm}
 
 \noindent
-\begin{tikzpicture}[remember picture, overlay]
-    % Full-width accent rectangle (flush with page top & both sides)
-    \fill[accentColor]
-        ([xshift=0cm, yshift=0cm]current page.north west)
-        rectangle
-        ([xshift=\paperwidth, yshift=-\headerHeight]current page.north west);
-    % Lighter tint strip at the very bottom of the header band
-    \fill[accentLight]
-        ([xshift=0cm, yshift=-\headerHeight+0.18cm]current page.north west)
-        rectangle
-        ([xshift=\paperwidth, yshift=-\headerHeight]current page.north west);
-\end{tikzpicture}%
-%
-\vspace*{0.55cm}%   push content below page top
-%
-\hspace{2cm}% left margin to match body text
-\begin{minipage}[t]{\dimexpr\linewidth-2cm-\photoSize-0.6cm\relax}
+\vspace*{0.55cm}
+\begin{adjustwidth}{2cm}{0cm}
+\begin{minipage}[t]{\dimexpr\linewidth-\photoSize-0.70cm\relax}
     \vspace{0pt}
-    % Name
-    {\fontsize{26pt}{26pt}\selectfont\color{white}\textbf{{{HEADER}}}
-    \par}
+    {{HEADER}}
 \end{minipage}%
 \hfill
-% Circular profile photo
 \begin{tikzpicture}[baseline=(img.south)]
-    \clip[preaction={fill=white}]
-        (0,0) circle (\photoSize/2);
-    \node[inner sep=0] (img) at (0,0)
-        {\includegraphics[width=\photoSize, height=\photoSize,
-                          keepaspectratio=false]{./assets/profile_pic_are.jpg}};
+    \clip (0,0) circle (\photoSize/2);
+    \node[inner sep=0] (img) at (0,0){%
+        \IfFileExists{{{IMAGE_PATH}}}{%
+            \includegraphics[width=\photoSize, height=\photoSize,
+                              keepaspectratio=false]{{{IMAGE_PATH}}}%
+        }{%
+            \color{accentLight}\rule{\photoSize}{\photoSize}%
+        }%
+    };
+    \draw[accentColor, line width=1.1pt] (0,0) circle (\photoSize/2);
 \end{tikzpicture}%
-\hspace{0.4cm}%
+\end{adjustwidth}
 
-\vspace{0.55cm}   % gap between header band and body
+\vspace{0.22cm}
+\begin{adjustwidth}{2cm}{0cm}
+    {\color{accentColor!35}\rule{\linewidth}{1.2pt}}
+\end{adjustwidth}
+
+\vspace{0.28cm}
 
 % ─────────────────────────────────────────────────────────────────────────────
-%  BODY — right margin is already set by geometry; add left margin manually
+%  BODY — right margin is already set by geometry
 % ─────────────────────────────────────────────────────────────────────────────
-\hspace{2cm}%
-\begin{minipage}{\dimexpr\linewidth\relax}
+
+% FIX 3: Replaced minipage with adjustwidth to prevent Paracol layout errors
+\begin{adjustwidth}{2cm}{0cm}
 
 % ── Education ────────────────────────────────────────────────────────────────
 \vspace{0.10cm}
@@ -209,6 +200,6 @@
 \section{Projects}
 {{PROJECTS}}
 
-\end{minipage}
+\end{adjustwidth}
 
 \end{document}
