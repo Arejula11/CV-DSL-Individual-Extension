@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV DSL Studio</title>
+    <style>
+        /* Estilos básicos para replicar la estructura de Overleaf */
+        body { margin: 0; display: flex; height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        #left-panel { flex: 1; display: flex; flex-direction: column; border-right: 2px solid #333; background: #1e1e1e; }
+        #right-panel { flex: 1; display: flex; flex-direction: column; background: #525659; }
+        
+        #toolbar { padding: 15px; background: #252526; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; }
+        h1 { margin: 0; font-size: 1.2rem; font-weight: normal; color: #cccccc; }
+        
+        #editor-container { flex: 1; }
+        iframe { flex: 1; border: none; width: 100%; height: 100%; }
+
+        /* Botón de compilación */
+        button { 
+            padding: 8px 20px; 
+            cursor: pointer; 
+            background: #007acc; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background: #005999; }
+        button:disabled { background: #555; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <div id="left-panel">
+        <div id="toolbar">
+            <h1>CV DSL Studio</h1>
+            <button id="compile-btn">Compilar CV</button>
+        </div>
+        <div id="editor-container"></div>
+    </div>
+
+    <div id="right-panel">
+        <iframe id="pdf-viewer" src="about:blank"></iframe>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script>
+        // 2. Configuramos la ruta hacia la CDN de Monaco Editor
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+        
+        require(['vs/editor/editor.main'], function() {
+            // 3. Inicializamos el editor de código en la parte izquierda
+            window.editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: 'Metadata \n    style: "Minimali" \n    font: "Calibri" \n    imgPath: "/assets/profile_pic_are.jpg"\n\n// Escribe el código de tu CV aquí...\n',
+                language: 'plaintext', // En la siguiente fase conectaremos esto con Xtext
+                theme: 'vs-dark',
+                automaticLayout: true,
+                minimap: { enabled: false }
+            });
+
+            // 4. Lógica de conexión con tu microservicio Java
+            document.getElementById('compile-btn').addEventListener('click', async () => {
+                const btn = document.getElementById('compile-btn');
+                btn.innerText = 'Compilando...';
+                btn.disabled = true;
+
+                // Extraemos el texto que el usuario ha escrito
+                const dslText = window.editor.getValue();
+
+                try {
+                    // Hacemos la petición POST al puerto 8080 (Java)
+                    const response = await fetch('http://localhost:8080/api/process-dsl', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ dsl: dslText })
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        alert('Error de compilación:\n' + errorText);
+                        throw new Error(errorText);
+                    }
+
+                    // Si Java nos devuelve el PDF, lo convertimos a un objeto visualizable
+                    const blob = await response.blob();
+                    const pdfUrl = URL.createObjectURL(blob);
+                    
+                    // Inyectamos el PDF en la parte derecha de la pantalla
+                    document.getElementById('pdf-viewer').src = pdfUrl;
+
+                } catch (err) {
+                    console.error("Fallo de conexión:", err);
+                } finally {
+                    // Restauramos el botón
+                    btn.innerText = 'Compilar CV';
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
