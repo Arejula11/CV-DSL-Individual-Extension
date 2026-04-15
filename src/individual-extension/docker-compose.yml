@@ -6,13 +6,25 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - app-network
+      - cv-network
+    # Le damos un nombre de host interno para que Java lo encuentre
+    hostname: python-service
 
-  
+# 2. El nuevo orquestador de Java
+  java-microservice:
+    build:
+      context: ./java-microservice
+    ports:
+      - "8080:8080"
+    networks:
+      - cv-network
+    depends_on:
+      - python-microservice 
+    environment:
+      # Le pasamos a Java la URL interna de Python por variable de entorno
+      - PYTHON_SERVICE_URL=http://python-service:8000/generate-pdf
 
-volumes:
-  db_data:
-
+# Definimos la red privada que los aísla del exterior
 networks:
-  app-network:
+  cv-network:
     driver: bridge
