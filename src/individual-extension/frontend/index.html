@@ -48,18 +48,112 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script>
+        const JAVA_API_BASE = 'http://localhost:8080/api';
+
         // 2. Configuramos la ruta hacia la CDN de Monaco Editor
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
         
         require(['vs/editor/editor.main'], function() {
+            monaco.languages.register({ id: 'resumeDsl' });
+
+            monaco.languages.setMonarchTokensProvider('resumeDsl', {
+                tokenizer: {
+                    root: [
+                        [/\b(Metadata|Userdata|Experience|Projects|Education|Skills|Interests|Languages|Metrics|Metric|Customization|Profile|where|include|all|after|before|tags|from|language|style|font|imgPath|name|email|telephoneNumber|direction|city|country|title|description|company|startDate|endDate|technologies|link|institution|graduationDate)\b/, 'keyword'],
+                        [/\b(Experience|Projects|Education|Skills|Interests|Languages|Metrics)\b/, 'type.identifier'],
+                        [/"([^"\\]|\\.)*"/, 'string'],
+                        [/\b\d+\b/, 'number'],
+                        [/\b[A-Za-z_][\w]*\b/, 'identifier'],
+                        [/\/\/.*$/, 'comment']
+                    ]
+                }
+            });
+
+            monaco.languages.setLanguageConfiguration('resumeDsl', {
+                comments: {
+                    lineComment: '//'
+                },
+                brackets: [['{', '}'], ['[', ']'], ['(', ')']],
+                autoClosingPairs: [
+                    { open: '"', close: '"' },
+                    { open: '[', close: ']' },
+                    { open: '(', close: ')' },
+                    { open: '{', close: '}' }
+                ]
+            });
+
             // 3. Inicializamos el editor de código en la parte izquierda
+            const model = monaco.editor.createModel(
+                'Metadata \n    style: "Minimali" \n    font: "Calibri" \n    imgPath: "/assets/profile_pic_are.jpg"\n\n// Escribe el código de tu CV aquí...\n',
+                'resumeDsl',
+                monaco.Uri.parse('inmemory://model/main.resume')
+            );
+
             window.editor = monaco.editor.create(document.getElementById('editor-container'), {
-                value: 'Metadata \n    style: "Minimali" \n    font: "Calibri" \n    imgPath: "/assets/profile_pic_are.jpg"\n\n// Escribe el código de tu CV aquí...\n',
-                language: 'plaintext', // En la siguiente fase conectaremos esto con Xtext
+                model,
                 theme: 'vs-dark',
                 automaticLayout: true,
                 minimap: { enabled: false }
             });
+
+            function toMarkerSeverity(severity) {
+                if (severity === 'error') return monaco.MarkerSeverity.Error;
+                if (severity === 'warning') return monaco.MarkerSeverity.Warning;
+                return monaco.MarkerSeverity.Info;
+            }
+
+            async function validateDslInEditor() {
+                const dslText = window.editor.getValue();
+                try {
+                    const response = await fetch(`${JAVA_API_BASE}/validate-dsl`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ dsl: dslText })
+                    });
+
+                    if (!response.ok) {
+                        monaco.editor.setModelMarkers(model, 'dsl-validator', []);
+                        return false;
+                    }
+
+                    const data = await response.json();
+                    const issues = Array.isArray(data.issues) ? data.issues : [];
+
+                    const markers = issues.map(issue => {
+                        const lineNumber = Math.max(1, Number(issue.line) || 1);
+                        const startColumn = Math.max(1, Number(issue.column) || 1);
+                        const length = Math.max(1, Number(issue.length) || 1);
+
+                        return {
+                            startLineNumber: lineNumber,
+                            endLineNumber: lineNumber,
+                            startColumn,
+                            endColumn: startColumn + length,
+                            message: issue.message || 'Error de validacion',
+                            severity: toMarkerSeverity(issue.severity)
+                        };
+                    });
+
+                    monaco.editor.setModelMarkers(model, 'dsl-validator', markers);
+                    return markers.some(marker => marker.severity === monaco.MarkerSeverity.Error);
+                } catch (err) {
+                    console.error('Fallo en validacion DSL:', err);
+                    return false;
+                }
+            }
+
+            let validationTimeout = null;
+            function scheduleValidation() {
+                if (validationTimeout) {
+                    clearTimeout(validationTimeout);
+                }
+                validationTimeout = setTimeout(() => {
+                    validateDslInEditor();
+                }, 300);
+            }
+
+            window.editor.onDidChangeModelContent(scheduleValidation);
+            scheduleValidation();
 
             // 4. Lógica de conexión con tu microservicio Java
             document.getElementById('compile-btn').addEventListener('click', async () => {
@@ -71,16 +165,41 @@
                 const dslText = window.editor.getValue();
 
                 try {
+                    const hasErrors = await validateDslInEditor();
+                    if (hasErrors) {
+                        alert('Hay errores en el DSL. Revisa los marcadores rojos antes de compilar.');
+                        return;
+                    }
+
                     // Hacemos la petición POST al puerto 8080 (Java)
-                    const response = await fetch('http://localhost:8080/api/process-dsl', {
+                    const response = await fetch(`${JAVA_API_BASE}/process-dsl`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ dsl: dslText })
                     });
 
                     if (!response.ok) {
+                        const contentType = response.headers.get('content-type') || '';
+                        if (contentType.includes('application/json')) {
+                            const errorData = await response.json();
+                            const issues = Array.isArray(errorData.issues) ? errorData.issues : [];
+
+                            const markers = issues.map(issue => ({
+                                startLineNumber: Math.max(1, Number(issue.line) || 1),
+                                endLineNumber: Math.max(1, Number(issue.line) || 1),
+                                startColumn: Math.max(1, Number(issue.column) || 1),
+                                endColumn: Math.max(1, (Number(issue.column) || 1) + Math.max(1, Number(issue.length) || 1)),
+                                message: issue.message || 'Error de compilacion',
+                                severity: toMarkerSeverity(issue.severity)
+                            }));
+                            monaco.editor.setModelMarkers(model, 'dsl-validator', markers);
+
+                            alert('Error de compilacion:\n' + (errorData.message || 'Revisa los marcadores del editor.'));
+                            throw new Error(errorData.message || 'Compilacion fallida');
+                        }
+
                         const errorText = await response.text();
-                        alert('Error de compilación:\n' + errorText);
+                        alert('Error de compilacion:\n' + errorText);
                         throw new Error(errorText);
                     }
 
