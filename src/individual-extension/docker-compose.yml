@@ -15,7 +15,7 @@ services:
     build:
       context: ./java-microservice
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - cv-network
     depends_on:
@@ -23,6 +23,7 @@ services:
     environment:
       # Le pasamos a Java la URL interna de Python por variable de entorno
       - PYTHON_SERVICE_URL=http://python-service:8000/generate-pdf
+      - SERVER_PORT=8081
 
 # Definimos la red privada que los aísla del exterior
 networks:
