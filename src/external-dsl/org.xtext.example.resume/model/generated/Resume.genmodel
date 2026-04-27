@@ -29,6 +29,7 @@
     <genClasses ecoreClass="Resume.ecore#//Userdata">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/linkedin"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/telephoneNumber"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/direction"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Resume.ecore#//Userdata/city"/>

@@ -94,6 +94,12 @@ public class ResumeGenerator extends AbstractGenerator {
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("\"");
+    String _linkedin = p.getUserdata().getLinkedin();
+    _builder.append(_linkedin, "    ");
+    _builder.append("\",");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("\"");
     String _telephoneNumber = p.getUserdata().getTelephoneNumber();
     _builder.append(_telephoneNumber, "    ");
     _builder.append("\", ");

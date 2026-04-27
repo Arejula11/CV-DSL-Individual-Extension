@@ -594,6 +594,7 @@ public class ResumeSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     (
 	 *         name=STRING 
 	 *         email=STRING 
+	 *         linkedin=STRING 
 	 *         telephoneNumber=STRING 
 	 *         direction=STRING 
 	 *         city=STRING 
@@ -607,6 +608,8 @@ public class ResumeSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.USERDATA__NAME));
 			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.USERDATA__EMAIL) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.USERDATA__EMAIL));
+			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.USERDATA__LINKEDIN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.USERDATA__LINKEDIN));
 			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.USERDATA__TELEPHONE_NUMBER) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ResumePackage.Literals.USERDATA__TELEPHONE_NUMBER));
 			if (transientValues.isValueTransient(semanticObject, ResumePackage.Literals.USERDATA__DIRECTION) == ValueTransient.YES)
@@ -619,10 +622,11 @@ public class ResumeSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getUserdataAccess().getNameSTRINGTerminalRuleCall_2_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getUserdataAccess().getEmailSTRINGTerminalRuleCall_4_0(), semanticObject.getEmail());
-		feeder.accept(grammarAccess.getUserdataAccess().getTelephoneNumberSTRINGTerminalRuleCall_6_0(), semanticObject.getTelephoneNumber());
-		feeder.accept(grammarAccess.getUserdataAccess().getDirectionSTRINGTerminalRuleCall_8_0(), semanticObject.getDirection());
-		feeder.accept(grammarAccess.getUserdataAccess().getCitySTRINGTerminalRuleCall_10_0(), semanticObject.getCity());
-		feeder.accept(grammarAccess.getUserdataAccess().getCountrySTRINGTerminalRuleCall_12_0(), semanticObject.getCountry());
+		feeder.accept(grammarAccess.getUserdataAccess().getLinkedinSTRINGTerminalRuleCall_6_0(), semanticObject.getLinkedin());
+		feeder.accept(grammarAccess.getUserdataAccess().getTelephoneNumberSTRINGTerminalRuleCall_8_0(), semanticObject.getTelephoneNumber());
+		feeder.accept(grammarAccess.getUserdataAccess().getDirectionSTRINGTerminalRuleCall_10_0(), semanticObject.getDirection());
+		feeder.accept(grammarAccess.getUserdataAccess().getCitySTRINGTerminalRuleCall_12_0(), semanticObject.getCity());
+		feeder.accept(grammarAccess.getUserdataAccess().getCountrySTRINGTerminalRuleCall_14_0(), semanticObject.getCountry());
 		feeder.finish();
 	}
 	

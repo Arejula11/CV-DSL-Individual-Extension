@@ -138,25 +138,28 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final Keyword cEmailKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cEmailAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cEmailSTRINGTerminalRuleCall_4_0 = (RuleCall)cEmailAssignment_4.eContents().get(0);
-		private final Keyword cTelephoneNumberKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Assignment cTelephoneNumberAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cTelephoneNumberSTRINGTerminalRuleCall_6_0 = (RuleCall)cTelephoneNumberAssignment_6.eContents().get(0);
-		private final Keyword cDirectionKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Assignment cDirectionAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cDirectionSTRINGTerminalRuleCall_8_0 = (RuleCall)cDirectionAssignment_8.eContents().get(0);
-		private final Keyword cCityKeyword_9 = (Keyword)cGroup.eContents().get(9);
-		private final Assignment cCityAssignment_10 = (Assignment)cGroup.eContents().get(10);
-		private final RuleCall cCitySTRINGTerminalRuleCall_10_0 = (RuleCall)cCityAssignment_10.eContents().get(0);
-		private final Keyword cCountryKeyword_11 = (Keyword)cGroup.eContents().get(11);
-		private final Assignment cCountryAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final RuleCall cCountrySTRINGTerminalRuleCall_12_0 = (RuleCall)cCountryAssignment_12.eContents().get(0);
+		private final Keyword cLinkedinKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cLinkedinAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cLinkedinSTRINGTerminalRuleCall_6_0 = (RuleCall)cLinkedinAssignment_6.eContents().get(0);
+		private final Keyword cTelephoneNumberKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cTelephoneNumberAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cTelephoneNumberSTRINGTerminalRuleCall_8_0 = (RuleCall)cTelephoneNumberAssignment_8.eContents().get(0);
+		private final Keyword cDirectionKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Assignment cDirectionAssignment_10 = (Assignment)cGroup.eContents().get(10);
+		private final RuleCall cDirectionSTRINGTerminalRuleCall_10_0 = (RuleCall)cDirectionAssignment_10.eContents().get(0);
+		private final Keyword cCityKeyword_11 = (Keyword)cGroup.eContents().get(11);
+		private final Assignment cCityAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cCitySTRINGTerminalRuleCall_12_0 = (RuleCall)cCityAssignment_12.eContents().get(0);
+		private final Keyword cCountryKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		private final Assignment cCountryAssignment_14 = (Assignment)cGroup.eContents().get(14);
+		private final RuleCall cCountrySTRINGTerminalRuleCall_14_0 = (RuleCall)cCountryAssignment_14.eContents().get(0);
 		
 		//Userdata:
-		//    'Userdata' 'name:' name=STRING 'email:' email=STRING 'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
+		//    'Userdata' 'name:' name=STRING 'email:' email=STRING 'linkedin:' linkedin=STRING  'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Userdata' 'name:' name=STRING 'email:' email=STRING 'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
+		//'Userdata' 'name:' name=STRING 'email:' email=STRING 'linkedin:' linkedin=STRING  'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'Userdata'
@@ -180,41 +183,50 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//STRING
 		public RuleCall getEmailSTRINGTerminalRuleCall_4_0() { return cEmailSTRINGTerminalRuleCall_4_0; }
 		
+		//'linkedin:'
+		public Keyword getLinkedinKeyword_5() { return cLinkedinKeyword_5; }
+		
+		//linkedin=STRING
+		public Assignment getLinkedinAssignment_6() { return cLinkedinAssignment_6; }
+		
+		//STRING
+		public RuleCall getLinkedinSTRINGTerminalRuleCall_6_0() { return cLinkedinSTRINGTerminalRuleCall_6_0; }
+		
 		//'telephoneNumber:'
-		public Keyword getTelephoneNumberKeyword_5() { return cTelephoneNumberKeyword_5; }
+		public Keyword getTelephoneNumberKeyword_7() { return cTelephoneNumberKeyword_7; }
 		
 		//telephoneNumber=STRING
-		public Assignment getTelephoneNumberAssignment_6() { return cTelephoneNumberAssignment_6; }
+		public Assignment getTelephoneNumberAssignment_8() { return cTelephoneNumberAssignment_8; }
 		
 		//STRING
-		public RuleCall getTelephoneNumberSTRINGTerminalRuleCall_6_0() { return cTelephoneNumberSTRINGTerminalRuleCall_6_0; }
+		public RuleCall getTelephoneNumberSTRINGTerminalRuleCall_8_0() { return cTelephoneNumberSTRINGTerminalRuleCall_8_0; }
 		
 		//'direction:'
-		public Keyword getDirectionKeyword_7() { return cDirectionKeyword_7; }
+		public Keyword getDirectionKeyword_9() { return cDirectionKeyword_9; }
 		
 		//direction=STRING
-		public Assignment getDirectionAssignment_8() { return cDirectionAssignment_8; }
+		public Assignment getDirectionAssignment_10() { return cDirectionAssignment_10; }
 		
 		//STRING
-		public RuleCall getDirectionSTRINGTerminalRuleCall_8_0() { return cDirectionSTRINGTerminalRuleCall_8_0; }
+		public RuleCall getDirectionSTRINGTerminalRuleCall_10_0() { return cDirectionSTRINGTerminalRuleCall_10_0; }
 		
 		//'city:'
-		public Keyword getCityKeyword_9() { return cCityKeyword_9; }
+		public Keyword getCityKeyword_11() { return cCityKeyword_11; }
 		
 		//city=STRING
-		public Assignment getCityAssignment_10() { return cCityAssignment_10; }
+		public Assignment getCityAssignment_12() { return cCityAssignment_12; }
 		
 		//STRING
-		public RuleCall getCitySTRINGTerminalRuleCall_10_0() { return cCitySTRINGTerminalRuleCall_10_0; }
+		public RuleCall getCitySTRINGTerminalRuleCall_12_0() { return cCitySTRINGTerminalRuleCall_12_0; }
 		
 		//'country:'
-		public Keyword getCountryKeyword_11() { return cCountryKeyword_11; }
+		public Keyword getCountryKeyword_13() { return cCountryKeyword_13; }
 		
 		//country=STRING
-		public Assignment getCountryAssignment_12() { return cCountryAssignment_12; }
+		public Assignment getCountryAssignment_14() { return cCountryAssignment_14; }
 		
 		//STRING
-		public RuleCall getCountrySTRINGTerminalRuleCall_12_0() { return cCountrySTRINGTerminalRuleCall_12_0; }
+		public RuleCall getCountrySTRINGTerminalRuleCall_14_0() { return cCountrySTRINGTerminalRuleCall_14_0; }
 	}
 	public class SectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.resume.Resume.Section");
@@ -1437,7 +1449,7 @@ public class ResumeGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 	
 	//Userdata:
-	//    'Userdata' 'name:' name=STRING 'email:' email=STRING 'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
+	//    'Userdata' 'name:' name=STRING 'email:' email=STRING 'linkedin:' linkedin=STRING  'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
 	//;
 	public UserdataElements getUserdataAccess() {
 		return pUserdata;

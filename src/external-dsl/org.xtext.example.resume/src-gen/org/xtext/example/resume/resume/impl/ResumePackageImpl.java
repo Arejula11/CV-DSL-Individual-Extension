@@ -438,7 +438,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
-  public EAttribute getUserdata_TelephoneNumber()
+  public EAttribute getUserdata_Linkedin()
   {
     return (EAttribute)userdataEClass.getEStructuralFeatures().get(2);
   }
@@ -449,7 +449,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
-  public EAttribute getUserdata_Direction()
+  public EAttribute getUserdata_TelephoneNumber()
   {
     return (EAttribute)userdataEClass.getEStructuralFeatures().get(3);
   }
@@ -460,7 +460,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
-  public EAttribute getUserdata_City()
+  public EAttribute getUserdata_Direction()
   {
     return (EAttribute)userdataEClass.getEStructuralFeatures().get(4);
   }
@@ -471,9 +471,20 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
    * @generated
    */
   @Override
-  public EAttribute getUserdata_Country()
+  public EAttribute getUserdata_City()
   {
     return (EAttribute)userdataEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getUserdata_Country()
+  {
+    return (EAttribute)userdataEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1236,6 +1247,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     userdataEClass = createEClass(USERDATA);
     createEAttribute(userdataEClass, USERDATA__NAME);
     createEAttribute(userdataEClass, USERDATA__EMAIL);
+    createEAttribute(userdataEClass, USERDATA__LINKEDIN);
     createEAttribute(userdataEClass, USERDATA__TELEPHONE_NUMBER);
     createEAttribute(userdataEClass, USERDATA__DIRECTION);
     createEAttribute(userdataEClass, USERDATA__CITY);
@@ -1389,6 +1401,7 @@ public class ResumePackageImpl extends EPackageImpl implements ResumePackage
     initEClass(userdataEClass, Userdata.class, "Userdata", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUserdata_Name(), ecorePackage.getEString(), "name", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUserdata_Email(), ecorePackage.getEString(), "email", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUserdata_Linkedin(), ecorePackage.getEString(), "linkedin", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUserdata_TelephoneNumber(), ecorePackage.getEString(), "telephoneNumber", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUserdata_Direction(), ecorePackage.getEString(), "direction", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUserdata_City(), ecorePackage.getEString(), "city", null, 0, 1, Userdata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

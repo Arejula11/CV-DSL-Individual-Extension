@@ -188,13 +188,22 @@ public interface ResumePackage extends EPackage
   int USERDATA__EMAIL = 1;
 
   /**
+   * The feature id for the '<em><b>Linkedin</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USERDATA__LINKEDIN = 2;
+
+  /**
    * The feature id for the '<em><b>Telephone Number</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USERDATA__TELEPHONE_NUMBER = 2;
+  int USERDATA__TELEPHONE_NUMBER = 3;
 
   /**
    * The feature id for the '<em><b>Direction</b></em>' attribute.
@@ -203,7 +212,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int USERDATA__DIRECTION = 3;
+  int USERDATA__DIRECTION = 4;
 
   /**
    * The feature id for the '<em><b>City</b></em>' attribute.
@@ -212,7 +221,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int USERDATA__CITY = 4;
+  int USERDATA__CITY = 5;
 
   /**
    * The feature id for the '<em><b>Country</b></em>' attribute.
@@ -221,7 +230,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int USERDATA__COUNTRY = 5;
+  int USERDATA__COUNTRY = 6;
 
   /**
    * The number of structural features of the '<em>Userdata</em>' class.
@@ -230,7 +239,7 @@ public interface ResumePackage extends EPackage
    * @generated
    * @ordered
    */
-  int USERDATA_FEATURE_COUNT = 6;
+  int USERDATA_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link org.xtext.example.resume.resume.impl.SectionImpl <em>Section</em>}' class.
@@ -1242,6 +1251,17 @@ public interface ResumePackage extends EPackage
   EAttribute getUserdata_Email();
 
   /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.resume.resume.Userdata#getLinkedin <em>Linkedin</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Linkedin</em>'.
+   * @see org.xtext.example.resume.resume.Userdata#getLinkedin()
+   * @see #getUserdata()
+   * @generated
+   */
+  EAttribute getUserdata_Linkedin();
+
+  /**
    * Returns the meta object for the attribute '{@link org.xtext.example.resume.resume.Userdata#getTelephoneNumber <em>Telephone Number</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2100,6 +2120,14 @@ public interface ResumePackage extends EPackage
      * @generated
      */
     EAttribute USERDATA__EMAIL = eINSTANCE.getUserdata_Email();
+
+    /**
+     * The meta object literal for the '<em><b>Linkedin</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute USERDATA__LINKEDIN = eINSTANCE.getUserdata_Linkedin();
 
     /**
      * The meta object literal for the '<em><b>Telephone Number</b></em>' attribute feature.

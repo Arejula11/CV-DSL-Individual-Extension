@@ -23,6 +23,7 @@ import org.xtext.example.resume.resume.Userdata;
  * <ul>
  *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getEmail <em>Email</em>}</li>
+ *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getLinkedin <em>Linkedin</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getTelephoneNumber <em>Telephone Number</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getDirection <em>Direction</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.impl.UserdataImpl#getCity <em>City</em>}</li>
@@ -72,6 +73,26 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
    * @ordered
    */
   protected String email = EMAIL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getLinkedin() <em>Linkedin</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLinkedin()
+   * @generated
+   * @ordered
+   */
+  protected static final String LINKEDIN_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLinkedin() <em>Linkedin</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLinkedin()
+   * @generated
+   * @ordered
+   */
+  protected String linkedin = LINKEDIN_EDEFAULT;
 
   /**
    * The default value of the '{@link #getTelephoneNumber() <em>Telephone Number</em>}' attribute.
@@ -230,6 +251,31 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
    * @generated
    */
   @Override
+  public String getLinkedin()
+  {
+    return linkedin;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setLinkedin(String newLinkedin)
+  {
+    String oldLinkedin = linkedin;
+    linkedin = newLinkedin;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ResumePackage.USERDATA__LINKEDIN, oldLinkedin, linkedin));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getTelephoneNumber()
   {
     return telephoneNumber;
@@ -338,6 +384,8 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
         return getName();
       case ResumePackage.USERDATA__EMAIL:
         return getEmail();
+      case ResumePackage.USERDATA__LINKEDIN:
+        return getLinkedin();
       case ResumePackage.USERDATA__TELEPHONE_NUMBER:
         return getTelephoneNumber();
       case ResumePackage.USERDATA__DIRECTION:
@@ -365,6 +413,9 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
         return;
       case ResumePackage.USERDATA__EMAIL:
         setEmail((String)newValue);
+        return;
+      case ResumePackage.USERDATA__LINKEDIN:
+        setLinkedin((String)newValue);
         return;
       case ResumePackage.USERDATA__TELEPHONE_NUMBER:
         setTelephoneNumber((String)newValue);
@@ -398,6 +449,9 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
       case ResumePackage.USERDATA__EMAIL:
         setEmail(EMAIL_EDEFAULT);
         return;
+      case ResumePackage.USERDATA__LINKEDIN:
+        setLinkedin(LINKEDIN_EDEFAULT);
+        return;
       case ResumePackage.USERDATA__TELEPHONE_NUMBER:
         setTelephoneNumber(TELEPHONE_NUMBER_EDEFAULT);
         return;
@@ -428,6 +482,8 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case ResumePackage.USERDATA__EMAIL:
         return EMAIL_EDEFAULT == null ? email != null : !EMAIL_EDEFAULT.equals(email);
+      case ResumePackage.USERDATA__LINKEDIN:
+        return LINKEDIN_EDEFAULT == null ? linkedin != null : !LINKEDIN_EDEFAULT.equals(linkedin);
       case ResumePackage.USERDATA__TELEPHONE_NUMBER:
         return TELEPHONE_NUMBER_EDEFAULT == null ? telephoneNumber != null : !TELEPHONE_NUMBER_EDEFAULT.equals(telephoneNumber);
       case ResumePackage.USERDATA__DIRECTION:
@@ -455,6 +511,8 @@ public class UserdataImpl extends MinimalEObjectImpl.Container implements Userda
     result.append(name);
     result.append(", email: ");
     result.append(email);
+    result.append(", linkedin: ");
+    result.append(linkedin);
     result.append(", telephoneNumber: ");
     result.append(telephoneNumber);
     result.append(", direction: ");

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.xtext.example.resume.resume.Userdata#getName <em>Name</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Userdata#getEmail <em>Email</em>}</li>
+ *   <li>{@link org.xtext.example.resume.resume.Userdata#getLinkedin <em>Linkedin</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Userdata#getTelephoneNumber <em>Telephone Number</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Userdata#getDirection <em>Direction</em>}</li>
  *   <li>{@link org.xtext.example.resume.resume.Userdata#getCity <em>City</em>}</li>
@@ -71,6 +72,28 @@ public interface Userdata extends EObject
    * @generated
    */
   void setEmail(String value);
+
+  /**
+   * Returns the value of the '<em><b>Linkedin</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Linkedin</em>' attribute.
+   * @see #setLinkedin(String)
+   * @see org.xtext.example.resume.resume.ResumePackage#getUserdata_Linkedin()
+   * @model
+   * @generated
+   */
+  String getLinkedin();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.resume.resume.Userdata#getLinkedin <em>Linkedin</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Linkedin</em>' attribute.
+   * @see #getLinkedin()
+   * @generated
+   */
+  void setLinkedin(String value);
 
   /**
    * Returns the value of the '<em><b>Telephone Number</b></em>' attribute.
