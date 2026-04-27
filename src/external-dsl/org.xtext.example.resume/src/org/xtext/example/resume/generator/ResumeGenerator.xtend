@@ -52,6 +52,7 @@ class ResumeGenerator extends AbstractGenerator {
        cv.with_userdata(
            "«p.userdata.name»", 
            "«p.userdata.email»", 
+           "«p.userdata.linkedin»",
            "«p.userdata.telephoneNumber»", 
            "«p.userdata.direction»", 
            "«p.userdata.country»", 

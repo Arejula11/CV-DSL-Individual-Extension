@@ -14,7 +14,7 @@ Metadata:
 ;
 
 Userdata:
-    'Userdata' 'name:' name=STRING 'email:' email=STRING 'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
+    'Userdata' 'name:' name=STRING 'email:' email=STRING 'linkedin:' linkedin=STRING  'telephoneNumber:' telephoneNumber=STRING 'direction:' direction=STRING 'city:' city=STRING 'country:' country=STRING
 ;
 
 Section:
